@@ -1,15 +1,42 @@
-import React, { useState } from "react";
-import { ANIMALS } from "petfinder-client";
+import React, { useState, useEffect } from "react";
+import pf, { ANIMALS } from "petfinder-client";
 import useDropdown from "../hooks/useDropdown";
+import Results from "./Results";
+const petfinder = pf({});
 
 const SearchParams = () => {
+  const [pets, setPets] = useState([]);
   const [location, setLocation] = useState("Seattle, WA");
   const [breeds, setBreeds] = useState([]);
-  const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
-  const [breed, BreedDropdown] = useDropdown("Breed", "Havanese", breeds);
+  const [animal, AnimalDropdown] = useDropdown("Animal", "Dog", ANIMALS);
+  const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
+
+  async function fetchPets() {
+    const res = await petfinder.pet.find({
+      location,
+      breed,
+      animal,
+      output: "full"
+    });
+    setPets(res.petfinder.pets.pet);
+  }
+
+  useEffect(() => {
+    setBreed("");
+    setBreeds([]);
+    petfinder.breed.list({ animal }).then(res => {
+      setBreeds(res.petfinder.breeds.breed);
+    });
+  }, []);
+
   return (
     <div className="search-params">
-      <form>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          fetchPets();
+        }}
+      >
         <label htmlFor="location">
           Location
           <input
@@ -23,6 +50,7 @@ const SearchParams = () => {
         <BreedDropdown />
         <button>Submit</button>
       </form>
+      <Results pets={pets} />
     </div>
   );
 };

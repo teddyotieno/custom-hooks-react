@@ -6,12 +6,13 @@ const useDropdown = (label, defaultState, options) => {
   const DropDown = () => {
     return (
       <label htmlFor={id}>
-        Animal
+        {label}
         <select
           id={id}
           value={state}
           onChange={e => setState(e.target.value)}
           onBlur={e => setState(e.target.value)}
+          disabled={!options.length}
         >
           <option />
           {options.map(selectOption => (

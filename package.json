@@ -9,6 +9,10 @@
     "dev": "parcel src/index.html"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
@@ -20,8 +24,13 @@
     "prettier": "^1.17.0"
   },
   "dependencies": {
+    "@reach/router": "^1.2.1",
     "petfinder-client": "^1.0.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
-  }
+    "react": "15.x || 16.x || 16.4.0-alpha.0911da3",
+    "react-dom": "15.x || 16.x || 16.4.0-alpha.0911da3"
+  },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions"
+  ]
 }
