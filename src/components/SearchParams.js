@@ -31,7 +31,7 @@ const SearchParams = () => {
     petfinder.breed.list({ animal }).then(res => {
       setBreeds(res.petfinder.breeds.breed);
     });
-  }, animal);
+  }, [animal]);
 
   return (
     <div className="search-params">
