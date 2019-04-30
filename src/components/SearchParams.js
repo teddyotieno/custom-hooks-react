@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import pf, { ANIMALS } from "petfinder-client";
 import useDropdown from "../hooks/useDropdown";
 import Results from "./Results";
-const petfinder = pf({});
+
+const petfinder = pf({
+  key: process.env.API_KEY,
+  secret: process.env.API_SECRET
+});
 
 const SearchParams = () => {
   const [pets, setPets] = useState([]);
@@ -27,7 +31,7 @@ const SearchParams = () => {
     petfinder.breed.list({ animal }).then(res => {
       setBreeds(res.petfinder.breeds.breed);
     });
-  }, []);
+  }, animal);
 
   return (
     <div className="search-params">

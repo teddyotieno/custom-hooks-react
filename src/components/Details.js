@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Carousel from "./Carousel";
 import pf from "petfinder-client";
+import Modal from "./Modal";
 
 const petfinder = pf();
 
 class Details extends Component {
   state = {
-    loading: true
+    loading: true,
+    showModal: false
   };
   componentDidMount() {
     petfinder.pet.get({ id: this.props.id, output: "full" }).then(data => {
@@ -23,8 +25,21 @@ class Details extends Component {
       });
     });
   }
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
   render() {
-    const { animal, breed, location, description, name, media } = this.state;
+    const {
+      animal,
+      breed,
+      location,
+      description,
+      name,
+      media,
+      showModal
+    } = this.state;
 
     if (this.state.loading) {
       return <h1>Loading</h1>;
@@ -36,9 +51,21 @@ class Details extends Component {
         <div>
           <h1>{name}</h1>
           <h2>{`${animal} - ${breed} - ${location}`}</h2>
-          <button>Adopt {name}</button>
+          <button onClick={this.toggleModal}>Adopt {name}</button>
           <p>{description}</p>
         </div>
+        {this.state.showModal ? (
+          <Modal>
+            {" "}
+            <div>
+              <h1>Would you like to adopt {name}?</h1>
+              <div className="buttons">
+                <button onClick={this.toggleModal}>Yes</button>
+                <button onClick={this.toggleModal}>Defnitely Yes</button>
+              </div>
+            </div>{" "}
+          </Modal>
+        ) : null}
       </div>
     );
   }

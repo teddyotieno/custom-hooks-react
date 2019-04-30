@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "petfinder-client": "^1.0.2",
+    "petfinder-client": "2",
     "react": "15.x || 16.x || 16.4.0-alpha.0911da3",
     "react-dom": "15.x || 16.x || 16.4.0-alpha.0911da3"
   },
