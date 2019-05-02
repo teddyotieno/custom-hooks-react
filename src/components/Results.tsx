@@ -1,7 +1,11 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
+import { Pet as IPet } from "petfinder-client";
 import Pet from "./Pet";
 
-const Results = ({ pets }) => {
+interface IProps {
+  pets: IPet[];
+}
+const Results: FunctionComponent<IProps> = ({ pets }) => {
   return (
     <div className="search">
       {pets.length === 0 ? (

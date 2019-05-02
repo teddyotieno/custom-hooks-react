@@ -1,7 +1,16 @@
 import React from "react";
 import { Link } from "@reach/router";
+import { PetMedia } from "petfinder-client";
 
-const Pet = ({ name, animal, breed, media, location, id }) => {
+interface IProps {
+  name: string;
+  animal: string;
+  breed: string;
+  media: PetMedia;
+  location: string;
+  id: string;
+}
+const Pet = ({ name, animal, breed, media, location, id }: IProps) => {
   const hero = media.photos.photo.length
     ? media.photos.photo[0].value
     : "http://placecorgi.com/300/300";

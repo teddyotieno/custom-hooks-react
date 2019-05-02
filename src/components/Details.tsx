@@ -1,16 +1,38 @@
 import React, { Component } from "react";
+import { RouteComponentProps, navigate } from "@reach/router";
 import Carousel from "./Carousel";
-import pf from "petfinder-client";
+import pf, { PetMedia } from "petfinder-client";
 import Modal from "./Modal";
 
-const petfinder = pf();
+if (!process.env.API_KEY || !process.env.API_SECRET) {
+  throw new Error("No api keys provided");
+}
 
-class Details extends Component {
-  state = {
+const petfinder = pf({
+  key: process.env.API_KEY,
+  secret: process.env.API_SECRET
+});
+
+interface IProps {
+  id: string;
+}
+
+class Details extends Component<RouteComponentProps<IProps>> {
+  public state = {
     loading: true,
-    showModal: false
+    showModal: false,
+    name: "",
+    animal: "",
+    breed: "",
+    location: "",
+    description: "",
+    media: {} as PetMedia
   };
-  componentDidMount() {
+  public componentDidMount() {
+    if (!this.props.id) {
+      navigate("/");
+      return;
+    }
     petfinder.pet.get({ id: this.props.id, output: "full" }).then(data => {
       this.setState({
         name: data.petfinder.pet.name,
@@ -25,12 +47,12 @@ class Details extends Component {
       });
     });
   }
-  toggleModal = () => {
+  public toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal
     });
   };
-  render() {
+  public render() {
     const {
       animal,
       breed,
